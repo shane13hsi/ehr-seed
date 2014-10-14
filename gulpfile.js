@@ -25,14 +25,29 @@ gulp.task("build", ['clean'], function (callback) {
             }
         }),
         new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        }),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.AggressiveMergingPlugin()
     ];
 
     // run webpack
     webpack(myConfig, function (err, stats) {
-        if (err) throw new gutil.PluginError("webpack:build-prod", err);
+        if (err) {
+            throw new gutil.PluginError("webpack:build-prod", err);
+        }
+        if (stats.hasWarnings()) {
+            gutil.log(stats.toString({
+                colors: true,
+                timings: false,
+                assets: false,
+                hash: false,
+                chunks: false
+            }).replace(/Version.*?\n/, 'Webpack Problems:'));
+        }
         gulp.src([ '!src/scripts/**', 'src/**/*']).pipe(gulp.dest('./dist/'));
         callback();
     });

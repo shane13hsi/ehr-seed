@@ -1,5 +1,7 @@
 {
-  "name": "gulp-react-karma-less",
+  "name": "gulp-webpack-react",
+  "description": "Seed project for React development.",
+  "repository": "https://github.com/grassator/gulp-webpack-react.git",
   "version": "0.1.0",
   "dependencies": {
     "react": "~0.10.0"
@@ -10,6 +12,8 @@
     "gulp": "latest",
     "gulp-clean": "latest",
     "gulp-util": "latest",
+    "jshint": "^2.5.6",
+    "jshint-loader": "^0.8.0",
     "jsx-loader": "^0.11.2",
     "karma": "^0.12.24",
     "karma-chai": "^0.1.0",

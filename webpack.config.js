@@ -39,15 +39,20 @@ module.exports = {
     },
 
     module: {
+        preLoaders: [{
+            test: /\.jsx$/,
+            exclude: __dirname + '/node_modules',
+            loaders: ['jshint', 'jsx?harmony&insertPragma=React.DOM']
+        }],
         loaders: [{
             test: /\.jsx$/,
             loaders: ['react-hot', 'jsx?harmony&insertPragma=React.DOM']
         }, {
             test: /\.css$/,
-            loader: "style!css"
+            loaders: ['style', 'css']
         }, {
             test: /\.less$/,
-            loader: "style!css!less"
+            loaders: ['style', 'css', 'less']
         }]
     }
 };
