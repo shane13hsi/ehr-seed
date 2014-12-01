@@ -5,6 +5,7 @@ var WebpackDevServer = require("webpack-dev-server");
 var webpackConfig = require("./webpack.config.js");
 var del = require('del');
 var runSequence = require('run-sequence');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 // The development server (the recommended option for development)
 gulp.task("default", ["webpack-dev-server"]);
@@ -30,8 +31,16 @@ gulp.task("build", ['clean'], function (callback) {
             }
         }),
         new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.AggressiveMergingPlugin()
+        new webpack.optimize.AggressiveMergingPlugin(),
+        new ExtractTextPlugin("../styles/main.css", {
+            allChunks: true
+        })
     ];
+    myConfig.module.loaders.pop();
+    myConfig.module.loaders.push({
+        test: /\.less$/,
+        loader: ExtractTextPlugin.extract("style", "css!less")
+    });
 
     // run webpack
     webpack(myConfig, function (err, stats) {
@@ -47,7 +56,8 @@ gulp.task("build", ['clean'], function (callback) {
                 chunks: false
             }).replace(/Version.*?\n/, 'Webpack Problems:'));
         }
-        gulp.src([ '!src/scripts/**', 'src/**/*']).pipe(gulp.dest('./dist/'));
+        gulp.src([ '!src/+(scripts|styles)/**', 'src/**/*'])
+            .pipe(gulp.dest('./dist/'));
         callback();
     });
 });
@@ -60,6 +70,7 @@ gulp.task("webpack-dev-server", function (callback) {
     new WebpackDevServer(webpack(conf), {
         publicPath: conf.output.publicPath,
         contentBase: './src/',
+        noInfo: true,
         stats: {
             colors: true
         },
@@ -68,6 +79,7 @@ gulp.task("webpack-dev-server", function (callback) {
         hot: true
     }).listen(8080, "localhost", function (err) {
         if (err) throw new gutil.PluginError("webpack-dev-server", err);
-        gutil.log("[webpack-dev-server]", "http://localhost:8080/webpack-dev-server/");
+        gutil.log("Webpack Dev Server Started:");
+        gutil.log("http://localhost:8080/webpack-dev-server/");
     });
 });

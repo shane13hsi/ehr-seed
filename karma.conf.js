@@ -6,10 +6,10 @@ module.exports = function (config) {
     frameworks: ['mocha', 'chai'],
     files: [
       'test/helpers/**/*.js',
-      'test/components/**/*.js'
+      'test/index.js'
     ],
     preprocessors: {
-      'test/components/**/*.js': ['webpack']
+      'test/index.js': ['webpack']
     },
     webpack: {
       cache: true,
@@ -25,18 +25,19 @@ module.exports = function (config) {
       }
     },
     webpackServer: {
+      noInfo: true,
       stats: {
         colors: true
       }
     },
     exclude: [],
-    port: 8080,
+    port: 9999,
     logLevel: config.LOG_INFO,
     colors: true,
     autoWatch: false,
     browsers: ['PhantomJS'],
     reporters: ['progress'],
-    captureTimeout: 60000,
+    captureTimeout: 10000,
     singleRun: true
   });
 };
