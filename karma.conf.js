@@ -3,7 +3,7 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['mocha', 'chai', 'sinon-chai'],
+    frameworks: ['mocha', 'chai'],
     files: [
       'test/helpers/**/*.js',
       'test/components/**/*.js'
@@ -20,7 +20,7 @@ module.exports = function (config) {
       module: {
         loaders: [{
           test: /\.jsx$/,
-          loader: 'jsx?harmony&insertPragma=React.DOM'
+          loader: 'jsx?harmony'
         }]
       }
     },

@@ -4,33 +4,27 @@
   "repository": "https://github.com/grassator/gulp-webpack-react.git",
   "version": "0.1.0",
   "dependencies": {
-    "react": "~0.10.0"
+    "react": "~0.12.0"
   },
   "devDependencies": {
-    "chai": "^1.9.2",
+    "chai": "^1.10.0",
     "css-loader": "^0.9.0",
-    "gulp": "latest",
-    "gulp-clean": "latest",
-    "gulp-util": "latest",
-    "jshint": "^2.5.6",
+    "del": "^1.0.0",
+    "gulp": "^3.8.10",
+    "gulp-util": "^3.0.1",
+    "jshint": "^2.5.10",
     "jshint-loader": "^0.8.0",
-    "jsx-loader": "^0.11.2",
-    "karma": "^0.12.24",
+    "jsx-loader": "^0.12.2",
+    "karma": "^0.12.28",
     "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "~0.1.2",
-    "karma-firefox-launcher": "~0.1.3",
-    "karma-jasmine": "~0.1.5",
     "karma-mocha": "^0.1.9",
-    "karma-phantomjs-launcher": "~0.1.1",
-    "karma-script-launcher": "~0.1.0",
-    "karma-sinon-chai": "^0.2.0",
+    "karma-webpack": "^1.3.1",
     "less": "^1.7.5",
     "less-loader": "^0.7.7",
-    "open": "latest",
+    "mocha": "^2.0.1",
     "react-hot-loader": "^0.5.0",
-    "run-sequence": "^0.3.6",
-    "style-loader": "^0.8.1",
-    "webpack": "^1.4.7",
-    "webpack-dev-server": "^1.6.5"
+    "run-sequence": "^1.0.2",
+    "style-loader": "^0.8.2",
+    "webpack": "^1.4.13"
   }
 }

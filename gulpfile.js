@@ -3,15 +3,14 @@ var gutil = require("gulp-util");
 var webpack = require("webpack");
 var WebpackDevServer = require("webpack-dev-server");
 var webpackConfig = require("./webpack.config.js");
-var clean = require('gulp-clean');
-var open = require("open");
+var del = require('del');
 var runSequence = require('run-sequence');
 
 // The development server (the recommended option for development)
 gulp.task("default", ["webpack-dev-server"]);
 
-gulp.task("clean", function () {
-    return gulp.src(['./dist/']).pipe(clean());
+gulp.task("clean", function (cb) {
+  del(['./dist/'], cb);
 });
 
 gulp.task("build", ['clean'], function (callback) {
@@ -69,7 +68,6 @@ gulp.task("webpack-dev-server", function (callback) {
         hot: true
     }).listen(8080, "localhost", function (err) {
         if (err) throw new gutil.PluginError("webpack-dev-server", err);
-        open("http://localhost:8080/webpack-dev-server/");
         gutil.log("[webpack-dev-server]", "http://localhost:8080/webpack-dev-server/");
     });
 });

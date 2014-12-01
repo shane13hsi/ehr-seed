@@ -42,11 +42,11 @@ module.exports = {
         preLoaders: [{
             test: /\.jsx$/,
             exclude: __dirname + '/node_modules',
-            loaders: ['jshint', 'jsx?harmony&insertPragma=React.DOM']
+            loaders: ['jshint', 'jsx?harmony']
         }],
         loaders: [{
             test: /\.jsx$/,
-            loaders: ['react-hot', 'jsx?harmony&insertPragma=React.DOM']
+            loaders: ['react-hot', 'jsx?harmony']
         }, {
             test: /\.css$/,
             loaders: ['style', 'css']
