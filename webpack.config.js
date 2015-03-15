@@ -1,28 +1,23 @@
-/*
- * Webpack development server configuration
- *
- * This file is set up for serving the webpak-dev-server, which will watch for changes and recompile as required if
- * the subfolder /webpack-dev-server/ is visited. Visiting the root will not automatically reload.
- */
+/*eslint-env node*/
 
 'use strict';
+var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
     output: {
-        path: __dirname + "/dist/scripts",
+        path: path.join(__dirname, 'dist', 'scripts'),
         publicPath: '/scripts/',
-        filename: "main.js"
+        filename: 'main.js'
     },
 
     entry: [
-        './scripts/main.jsx'
+        path.join('scripts', 'main')
     ],
 
     cache: true,
     debug: false,
     devtool: false,
-    context: __dirname + '/src',
 
     stats: {
         colors: true,
@@ -30,23 +25,30 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin()
     ],
 
     resolve: {
         // Allow to omit extensions when requiring these files
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx'],
+        root: path.join(__dirname, 'src')
     },
 
     module: {
         preLoaders: [{
-            test: /\.jsx$/,
-            exclude: __dirname + '/node_modules',
-            loaders: ['jshint', 'jsx?harmony']
+            test: /\.(jsx|js)$/,
+            exclude: path.join(__dirname, 'node_modules'),
+            loaders: ['eslint']
         }],
         loaders: [{
             test: /\.jsx$/,
-            loaders: ['react-hot', 'jsx?harmony']
+            exclude: path.join(__dirname, 'node_modules'),
+            loaders: ['react-hot', 'babel']
+        }, {
+            test: /\.js$/,
+            exclude: path.join(__dirname, 'node_modules'),
+            loaders: ['babel']
         }, {
             test: /\.less$/,
             loaders: ['style', 'css', 'less']

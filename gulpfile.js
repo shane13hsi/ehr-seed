@@ -1,27 +1,26 @@
-var gulp = require("gulp");
-var gutil = require("gulp-util");
-var webpack = require("webpack");
-var WebpackDevServer = require("webpack-dev-server");
-var webpackConfig = require("./webpack.config.js");
+var gulp = require('gulp');
+var gutil = require('gulp-util');
+var webpack = require('webpack');
+var WebpackDevServer = require('webpack-dev-server');
+var webpackConfig = require('./webpack.config.js');
 var del = require('del');
-var runSequence = require('run-sequence');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // The development server (the recommended option for development)
-gulp.task("default", ["webpack-dev-server"]);
+gulp.task('default', ['webpack-dev-server']);
 
-gulp.task("clean", function (cb) {
-  del(['./dist/'], cb);
+gulp.task('clean', function (cb) {
+    del(['./dist/'], cb);
 });
 
-gulp.task("build", ['clean'], function (callback) {
+gulp.task('build', ['clean'], function (callback) {
     // modify some webpack config options
     var myConfig = Object.create(webpackConfig);
     myConfig.plugins = [
         new webpack.DefinePlugin({
-            "process.env": {
+            'process.env': {
                 // This has effect on the react lib size
-                "NODE_ENV": JSON.stringify("production")
+                'NODE_ENV': JSON.stringify('production')
             }
         }),
         new webpack.optimize.DedupePlugin(),
@@ -32,20 +31,20 @@ gulp.task("build", ['clean'], function (callback) {
         }),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.AggressiveMergingPlugin(),
-        new ExtractTextPlugin("../styles/main.css", {
+        new ExtractTextPlugin('../styles/main.css', {
             allChunks: true
         })
     ];
     myConfig.module.loaders.pop();
     myConfig.module.loaders.push({
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract("style", "css!less")
+        loader: ExtractTextPlugin.extract('style', 'css!less')
     });
 
     // run webpack
     webpack(myConfig, function (err, stats) {
         if (err) {
-            throw new gutil.PluginError("webpack:build-prod", err);
+            throw new gutil.PluginError('webpack:build-prod', err);
         }
         if (stats.hasWarnings()) {
             gutil.log(stats.toString({
@@ -62,7 +61,7 @@ gulp.task("build", ['clean'], function (callback) {
     });
 });
 
-gulp.task("webpack-dev-server", function (callback) {
+gulp.task('webpack-dev-server', function (/* callback */) {
     var conf = Object.create(webpackConfig);
     conf.entry.push('webpack/hot/dev-server');
 
@@ -77,9 +76,9 @@ gulp.task("webpack-dev-server", function (callback) {
         debug: true,
         devtool: 'eval',
         hot: true
-    }).listen(8080, "localhost", function (err) {
-        if (err) throw new gutil.PluginError("webpack-dev-server", err);
-        gutil.log("Webpack Dev Server Started:");
-        gutil.log("http://localhost:8080/webpack-dev-server/");
+    }).listen(8080, 'localhost', function (err) {
+        if (err) { throw new gutil.PluginError('webpack-dev-server', err); }
+        gutil.log('Webpack Dev Server Started:');
+        gutil.log('http://localhost:8080/webpack-dev-server/');
     });
 });
