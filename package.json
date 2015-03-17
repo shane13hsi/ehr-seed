@@ -16,7 +16,7 @@
     "css-loader": "^0.9.1",
     "del": "^1.1.1",
     "eslint": "^0.17.0",
-    "eslint-loader": "git+https://github.com/grassator/eslint-loader.git#eslint-0.17",
+    "eslint-loader": "^0.7.0",
     "eslint-plugin-react": "^1.5.0",
     "extract-text-webpack-plugin": "^0.3.8",
     "gulp": "^3.8.11",
