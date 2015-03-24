@@ -1,4 +1,8 @@
+'use strict';
+
 var gulp = require('gulp');
+var inject = require('gulp-inject');
+var filter = require('gulp-filter');
 var gutil = require('gulp-util');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
@@ -55,7 +59,13 @@ gulp.task('build', ['clean'], function (callback) {
                 chunks: false
             }).replace(/Version.*?\n/, 'Webpack Problems:'));
         }
-        gulp.src([ '!src/+(scripts|styles)/**', 'src/**/*'])
+        gulp.src(['!src/+(scripts|styles)/**', 'src/**/*'])
+            .pipe(gulp.dest('./dist/'))
+            .pipe(filter('**/index.html'))
+            .pipe(inject(gulp.src('./styles/main.css', {
+                read: false,
+                cwd: './dist/'
+            }), { relative: true }))
             .pipe(gulp.dest('./dist/'));
         callback();
     });

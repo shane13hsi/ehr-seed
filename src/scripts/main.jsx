@@ -1,6 +1,6 @@
 'use strict';
-var React = require('react/addons');
-var App = require('./components/App.jsx');
-require('./../styles/main.less');
+import React from 'react/addons';
+import App from './components/App';
+import './../styles/main.less';
 
 React.render(<App />, document.body);

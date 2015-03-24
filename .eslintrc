@@ -3,8 +3,7 @@
         "es6": true
     },
     "ecmaFeatures": {
-//        Temporarily disabled due to a bug in eslint
-//        "modules": true,
+        "modules": true,
         "jsx": true
     },
     "rules": {
@@ -16,7 +15,6 @@
         "space-after-keywords": [2, "always"],
         "space-before-blocks": [2, "always"],
         "global-strict": [2, "always"],
-        "strict": [2, "global"],
         "quotes": [2, "single"],
         "react/self-closing-comp": 1,
         "react/no-did-mount-set-state": 1,
