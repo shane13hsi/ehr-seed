@@ -2,9 +2,9 @@
   "name": "gulp-webpack-react",
   "description": "Seed project for React development.",
   "repository": "https://github.com/grassator/gulp-webpack-react.git",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start --singleRun=true"
+    "test": "gulp test"
   },
   "dependencies": {
     "react": "~0.13.0"
@@ -15,13 +15,13 @@
     "chai": "^2.1.1",
     "css-loader": "^0.9.1",
     "del": "^1.1.1",
-    "eslint": "^0.17.1",
-    "eslint-loader": "^0.7.0",
-    "eslint-plugin-react": "^1.5.0",
-    "extract-text-webpack-plugin": "^0.3.8",
+    "es5-shim": "^4.1.0",
+    "eslint": "^0.18.0",
+    "eslint-loader": "^0.9.0",
+    "eslint-plugin-react": "^2.0.2",
+    "extract-text-webpack-plugin": "^0.5.0",
     "gulp": "^3.8.11",
-    "gulp-filter": "^2.0.2",
-    "gulp-inject": "^1.2.0",
+    "gulp-replace": "^0.5.3",
     "gulp-util": "^3.0.4",
     "karma": "^0.12.31",
     "karma-chai": "^0.1.0",
@@ -32,7 +32,7 @@
     "less-loader": "^2.1.0",
     "mocha": "^2.2.1",
     "react-hot-loader": "^1.2.3",
-    "style-loader": "^0.8.3",
+    "style-loader": "^0.9.0",
     "webpack": "^1.7.3",
     "webpack-dev-server": "^1.7.0"
   }

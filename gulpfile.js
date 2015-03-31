@@ -1,54 +1,39 @@
-'use strict';
-
+/*eslint-env node*/
 var gulp = require('gulp');
-var inject = require('gulp-inject');
-var filter = require('gulp-filter');
 var gutil = require('gulp-util');
+var replace = require('gulp-replace');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
-var webpackConfig = require('./webpack.config.js');
+var generateWebpackConfig = require('./build/webpack-config-generator');
+var karma = require('karma').server;
 var del = require('del');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var path = require('path');
 
-// The development server (the recommended option for development)
-gulp.task('default', ['webpack-dev-server']);
+gulp.task('default', ['build']);
 
-gulp.task('clean', function (cb) {
-    del(['./dist/'], cb);
+gulp.task('clean', function (done) {
+    del(['dist/'], done);
 });
 
-gulp.task('build', ['clean'], function (callback) {
-    // modify some webpack config options
-    var myConfig = Object.create(webpackConfig);
-    myConfig.plugins = [
-        new webpack.DefinePlugin({
-            'process.env': {
-                // This has effect on the react lib size
-                'NODE_ENV': JSON.stringify('production')
-            }
-        }),
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        }),
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.AggressiveMergingPlugin(),
-        new ExtractTextPlugin('../styles/main.css', {
-            allChunks: true
-        })
-    ];
-    myConfig.module.loaders.pop();
-    myConfig.module.loaders.push({
-        test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style', 'css!less')
-    });
+gulp.task('test', function (done) {
+    karma.start({
+        configFile: path.join(__dirname, 'karma.conf.js'),
+        singleRun: true,
+        autoWatch: false
+    }, done);
+});
 
-    // run webpack
-    webpack(myConfig, function (err, stats) {
+gulp.task('tdd', function (done) {
+    karma.start({ configFile: path.join(__dirname, 'karma.conf.js') }, done);
+});
+
+gulp.task('build', ['test', 'build:process-html', 'build:copy-assets', 'build:webpack']);
+
+gulp.task('build:webpack', function (done) {
+    var conf = generateWebpackConfig('production');
+    webpack(conf, function (err, stats) {
         if (err) {
-            throw new gutil.PluginError('webpack:build-prod', err);
+            throw new gutil.PluginError('build', err);
         }
         if (stats.hasWarnings()) {
             gutil.log(stats.toString({
@@ -59,35 +44,35 @@ gulp.task('build', ['clean'], function (callback) {
                 chunks: false
             }).replace(/Version.*?\n/, 'Webpack Problems:'));
         }
-        gulp.src(['!src/+(scripts|styles)/**', 'src/**/*'])
-            .pipe(gulp.dest('./dist/'))
-            .pipe(filter('**/index.html'))
-            .pipe(inject(gulp.src('./styles/main.css', {
-                read: false,
-                cwd: './dist/'
-            }), { relative: true }))
-            .pipe(gulp.dest('./dist/'));
-        callback();
+        done();
     });
 });
 
-gulp.task('webpack-dev-server', function (/* callback */) {
-    var conf = Object.create(webpackConfig);
-    conf.entry.push('webpack/hot/dev-server');
+gulp.task('build:copy-assets', function () {
+    return gulp.src(['src/assets/**'])
+        .pipe(gulp.dest('dist/assets'));
+});
 
-    // Start a webpack-dev-server
+gulp.task('build:process-html', function () {
+    return gulp.src(['src/index.html'])
+        .pipe(replace(
+            '<!-- inject:css -->',
+            '<link href="styles/main.css" rel="stylesheet" type="text/css">'
+        ))
+        .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('server', function () {
+    var conf = generateWebpackConfig('server');
     new WebpackDevServer(webpack(conf), {
         publicPath: conf.output.publicPath,
-        contentBase: './src/',
+        contentBase: 'src/',
         noInfo: true,
-        stats: {
-            colors: true
-        },
-        debug: true,
-        devtool: 'eval',
         hot: true
     }).listen(8080, 'localhost', function (err) {
-        if (err) { throw new gutil.PluginError('webpack-dev-server', err); }
+        if (err) {
+            throw new gutil.PluginError('server', err);
+        }
         gutil.log('Webpack Dev Server Started:');
         gutil.log('http://localhost:8080/webpack-dev-server/');
     });

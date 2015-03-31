@@ -1,16 +1,20 @@
 # Gulp React Karma Less
 
-To start do a clone of this repo, type in:
+To start do a clone of this repo and type in your terminal:
 
     npm install
-    gulp
+    gulp server
 
-This will start webpack development server with hot code reload for React components.
+This will start webpack development server with hot code reload for React components and LESS styles.
 
-To run the tests use:
+To run continuously (TDD) type in:
 
-    npm test
+    gulp tdd
 
-To build for production you can run:
+To run the tests just once you can use:
+
+    gulp test
+
+To build for production run:
 
     gulp build
