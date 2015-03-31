@@ -1,6 +1,4 @@
 /*eslint-env node*/
-var webpackConfig = require('./build/webpack-config-generator')('test');
-
 module.exports = function (config) {
     config.set({
         basePath: '',
@@ -11,13 +9,8 @@ module.exports = function (config) {
         preprocessors: {
             'test/index.js': ['webpack']
         },
-        webpack: webpackConfig,
-        webpackServer: {
-            noInfo: true,
-            stats: {
-                colors: true
-            }
-        },
+        webpack: require('./build/webpack-config-generator')('test'),
+        webpackServer: require('./build/webpack-server-conf'),
         exclude: [],
         port: 9999,
         logLevel: config.LOG_WARN,

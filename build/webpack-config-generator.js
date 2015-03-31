@@ -62,7 +62,7 @@ module.exports = function (environment) {
         conf.debug = true;
         conf.devtool = 'eval';
         conf.module.loaders.push({
-            test: /\.less$/,
+            test: /\.(css|less)$/,
             loaders: ['style', 'css', 'less']
         });
     }
@@ -96,7 +96,7 @@ module.exports = function (environment) {
             loaders: ['eslint']
         }];
         conf.module.loaders.push({
-            test: /\.less$/,
+            test: /\.(css|less)$/,
             loader: ExtractTextPlugin.extract('style', 'css!less')
         });
     }

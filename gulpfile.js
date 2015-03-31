@@ -64,16 +64,14 @@ gulp.task('build:process-html', function () {
 
 gulp.task('server', function () {
     var conf = generateWebpackConfig('server');
-    new WebpackDevServer(webpack(conf), {
-        publicPath: conf.output.publicPath,
-        contentBase: 'src/',
-        noInfo: true,
-        hot: true
-    }).listen(8080, 'localhost', function (err) {
+    var serverConf = require('./build/webpack-server-conf');
+    var startCallback = function (err) {
         if (err) {
             throw new gutil.PluginError('server', err);
         }
         gutil.log('Webpack Dev Server Started:');
         gutil.log('http://localhost:8080/webpack-dev-server/');
-    });
+    };
+    var server = new WebpackDevServer(webpack(conf), serverConf);
+    server.listen(8080, 'localhost', startCallback);
 });
