@@ -5,6 +5,7 @@ var replace = require('gulp-replace');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var generateWebpackConfig = require('./build/webpack-config-generator');
+var constants = require('./build/constants');
 var karma = require('karma').server;
 var del = require('del');
 var path = require('path');
@@ -12,19 +13,21 @@ var path = require('path');
 gulp.task('default', ['build']);
 
 gulp.task('clean', function (done) {
-    del(['dist/'], done);
+    del([constants.DIST_DIR], done);
 });
 
 gulp.task('test', function (done) {
     karma.start({
-        configFile: path.join(__dirname, 'karma.conf.js'),
+        configFile: constants.KARMA_CONFIG_PATH,
         singleRun: true,
         autoWatch: false
     }, done);
 });
 
 gulp.task('tdd', function (done) {
-    karma.start({ configFile: path.join(__dirname, 'karma.conf.js') }, done);
+    karma.start({
+        configFile: constants.KARMA_CONFIG_PATH
+    }, done);
 });
 
 gulp.task('build', ['build:process-html', 'build:webpack']);
@@ -49,12 +52,12 @@ gulp.task('build:webpack', ['clean'], function (done) {
 });
 
 gulp.task('build:process-html', ['clean'], function () {
-    return gulp.src(['src/index.html'])
+    return gulp.src([path.join(constants.SRC_DIR, 'index.html')])
         .pipe(replace(
             '<!-- inject:css -->',
-            '<link href="styles/main.css" rel="stylesheet" type="text/css">'
+            '<link href="' + constants.CSS_PATH + '" rel="stylesheet" type="text/css">'
         ))
-        .pipe(gulp.dest('dist/'));
+        .pipe(gulp.dest(constants.DIST_DIR));
 });
 
 gulp.task('server', function () {

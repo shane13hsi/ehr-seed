@@ -1,29 +1,28 @@
 /*eslint-env node*/
-
 var path = require('path');
+var constants = require('./constants');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var BASE_PATH = path.normalize(path.join(__dirname, '..'));
 
 module.exports = function (environment) {
     environment = environment || 'production';
 
     var jsx = {
         test: /\.jsx$/,
-        exclude: path.join(BASE_PATH, 'node_modules'),
+        exclude: constants.NODE_MODULES_DIR,
         loaders: ['babel']
     };
 
     var conf = {
         output: {
-            path: path.join(BASE_PATH, 'dist', 'scripts'),
-            filename: 'main.js'
+            path: path.join(constants.ABSOLUTE_BASE, constants.DIST_DIR, constants.SCRIPT_DIR),
+            filename: constants.ENTRY_NAME + '.js'
         },
 
-        context: path.join(BASE_PATH, 'src'),
+        context: path.join(constants.ABSOLUTE_BASE, constants.SRC_DIR),
 
         entry: [
-            path.join('scripts', 'main')
+            path.join(constants.SCRIPT_DIR, constants.ENTRY_NAME)
         ],
 
         cache: true,
@@ -47,17 +46,17 @@ module.exports = function (environment) {
         resolve: {
             // Allow to omit extensions when requiring these files
             extensions: ['', '.js', '.jsx'],
-            root: path.join(BASE_PATH, 'src')
+            root: path.join(constants.ABSOLUTE_BASE, constants.SRC_DIR)
         },
 
         module: {
             loaders: [jsx, {
                 test: /\.js$/,
-                exclude: path.join(BASE_PATH, 'node_modules'),
+                exclude: constants.NODE_MODULES_DIR,
                 loaders: ['babel']
             }, {
                 test: /\.(png|jpg|gif)$/,
-                loaders: ['file?name=../[path][name].[ext]']
+                loaders: ['file?name=' + constants.CSS_RELATIVE_BASE + '[path][name].[ext]']
             }]
         }
     };
@@ -72,7 +71,7 @@ module.exports = function (environment) {
     }
 
     if (environment === 'server') {
-        conf.output.publicPath = '/scripts/';
+        conf.output.publicPath = '/' + constants.SCRIPT_DIR;
         conf.entry.push('webpack/hot/dev-server');
         conf.plugins.push(
             new webpack.HotModuleReplacementPlugin(),
@@ -91,13 +90,15 @@ module.exports = function (environment) {
             }),
             new webpack.optimize.OccurenceOrderPlugin(),
             new webpack.optimize.AggressiveMergingPlugin(),
-            new ExtractTextPlugin('../styles/main.css', {
-                allChunks: true
-            })
+            new ExtractTextPlugin(
+                constants.CSS_RELATIVE_BASE + constants.CSS_PATH, {
+                    allChunks: true
+                }
+            )
         );
         conf.preLoaders = [{
             test: /\.(jsx|js)$/,
-            exclude: path.join(BASE_PATH, 'node_modules'),
+            exclude: constants.NODE_MODULES_DIR,
             loaders: ['eslint']
         }];
         conf.module.loaders.push({
