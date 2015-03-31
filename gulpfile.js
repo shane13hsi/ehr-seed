@@ -27,9 +27,9 @@ gulp.task('tdd', function (done) {
     karma.start({ configFile: path.join(__dirname, 'karma.conf.js') }, done);
 });
 
-gulp.task('build', ['test', 'build:process-html', 'build:copy-assets', 'build:webpack']);
+gulp.task('build', ['build:process-html', 'build:webpack']);
 
-gulp.task('build:webpack', function (done) {
+gulp.task('build:webpack', ['clean'], function (done) {
     var conf = generateWebpackConfig('production');
     webpack(conf, function (err, stats) {
         if (err) {
@@ -48,12 +48,7 @@ gulp.task('build:webpack', function (done) {
     });
 });
 
-gulp.task('build:copy-assets', function () {
-    return gulp.src(['src/assets/**'])
-        .pipe(gulp.dest('dist/assets'));
-});
-
-gulp.task('build:process-html', function () {
+gulp.task('build:process-html', ['clean'], function () {
     return gulp.src(['src/index.html'])
         .pipe(replace(
             '<!-- inject:css -->',

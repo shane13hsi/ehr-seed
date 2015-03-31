@@ -17,9 +17,10 @@ module.exports = function (environment) {
     var conf = {
         output: {
             path: path.join(BASE_PATH, 'dist', 'scripts'),
-            publicPath: '/scripts/',
             filename: 'main.js'
         },
+
+        context: path.join(BASE_PATH, 'src'),
 
         entry: [
             path.join('scripts', 'main')
@@ -54,6 +55,9 @@ module.exports = function (environment) {
                 test: /\.js$/,
                 exclude: path.join(BASE_PATH, 'node_modules'),
                 loaders: ['babel']
+            }, {
+                test: /\.(png|jpg|gif)$/,
+                loaders: ['file?name=../[path][name].[ext]']
             }]
         }
     };
@@ -68,6 +72,7 @@ module.exports = function (environment) {
     }
 
     if (environment === 'server') {
+        conf.output.publicPath = '/scripts/';
         conf.entry.push('webpack/hot/dev-server');
         conf.plugins.push(
             new webpack.HotModuleReplacementPlugin(),

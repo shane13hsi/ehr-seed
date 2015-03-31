@@ -1,6 +1,5 @@
-var conf = require('./webpack-config-generator')('server');
 module.exports = {
-    publicPath: conf.output.publicPath,
+    publicPath: '/scripts/',
     contentBase: 'src/',
     noInfo: true,
     hot: true,
