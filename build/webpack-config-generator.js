@@ -7,6 +7,10 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = function (environment) {
     environment = environment || 'production';
 
+    var autoprefixerConfig = JSON.stringify({
+        browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']
+    });
+
     var jsx = {
         test: /\.jsx$/,
         exclude: constants.NODE_MODULES_DIR,
@@ -66,7 +70,7 @@ module.exports = function (environment) {
         conf.devtool = 'eval';
         conf.module.loaders.push({
             test: /\.(css|less)$/,
-            loaders: ['style', 'css', 'less']
+            loaders: ['style', 'css', 'autoprefixer?' + autoprefixerConfig, 'less']
         });
     }
 
@@ -103,7 +107,10 @@ module.exports = function (environment) {
         }];
         conf.module.loaders.push({
             test: /\.(css|less)$/,
-            loader: ExtractTextPlugin.extract('style', 'css!less')
+            loader: ExtractTextPlugin.extract(
+                'style',
+                'css!autoprefixer?' + autoprefixerConfig + '!less'
+            )
         });
     }
 

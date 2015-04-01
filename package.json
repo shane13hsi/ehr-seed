@@ -10,6 +10,7 @@
     "react": "~0.13.0"
   },
   "devDependencies": {
+    "autoprefixer-loader": "^1.2.0",
     "babel-core": "^4.7.12",
     "babel-loader": "^4.1.0",
     "chai": "^2.1.1",
