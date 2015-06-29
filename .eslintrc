@@ -1,4 +1,5 @@
 {
+    "extends": "eslint-config-airbnb",
     "env": {
         "es6": true
     },
@@ -11,6 +12,7 @@
         "comma-style": [2, "last"],
         "indent": [2, 4, { "indentSwitchCase": true }],
         "no-constant-condition": 2,
+        "no-var": 1,
         "semi": [2, "always"],
         "space-after-keywords": [2, "always"],
         "space-before-blocks": [2, "always"],

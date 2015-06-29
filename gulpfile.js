@@ -1,4 +1,5 @@
 /*eslint-env node*/
+var eslint = require('gulp-eslint');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var replace = require('gulp-replace');
@@ -12,11 +13,22 @@ var path = require('path');
 
 gulp.task('default', ['build']);
 
-gulp.task('clean', function (done) {
+gulp.task('eslint', function() {
+    return gulp.src([
+        'gulpfile.js',
+        'src/**/*.js',
+        'build/*.js'
+    ])
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failOnError());
+});
+
+gulp.task('clean', function(done) {
     del([constants.DIST_DIR], done);
 });
 
-gulp.task('test', function (done) {
+gulp.task('test', function(done) {
     karma.start({
         configFile: constants.KARMA_CONFIG_PATH,
         singleRun: true,
@@ -24,7 +36,7 @@ gulp.task('test', function (done) {
     }, done);
 });
 
-gulp.task('tdd', function (done) {
+gulp.task('tdd', function(done) {
     karma.start({
         configFile: constants.KARMA_CONFIG_PATH
     }, done);
@@ -32,9 +44,9 @@ gulp.task('tdd', function (done) {
 
 gulp.task('build', ['build:process-html', 'build:webpack']);
 
-gulp.task('build:webpack', ['clean'], function (done) {
+gulp.task('build:webpack', ['clean'], function(done) {
     var conf = generateWebpackConfig('production');
-    webpack(conf, function (err, stats) {
+    webpack(conf, function(err, stats) {
         if (err) {
             throw new gutil.PluginError('build', err);
         }
@@ -51,7 +63,7 @@ gulp.task('build:webpack', ['clean'], function (done) {
     });
 });
 
-gulp.task('build:process-html', ['clean'], function () {
+gulp.task('build:process-html', ['clean'], function() {
     return gulp.src([path.join(constants.SRC_DIR, 'index.html')])
         .pipe(replace(
             '<!-- inject:css -->',
@@ -60,10 +72,10 @@ gulp.task('build:process-html', ['clean'], function () {
         .pipe(gulp.dest(constants.DIST_DIR));
 });
 
-gulp.task('server', function () {
+gulp.task('server', function() {
     var conf = generateWebpackConfig('server');
     var serverConf = require('./build/webpack-server-conf');
-    var startCallback = function (err) {
+    var startCallback = function(err) {
         if (err) {
             throw new gutil.PluginError('server', err);
         }

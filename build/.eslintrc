@@ -1,0 +1,6 @@
+{
+    "rules": {
+        "vars-on-top": 1,
+        "no-param-reassign": 1
+    }
+}

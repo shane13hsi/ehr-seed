@@ -4,7 +4,7 @@ var constants = require('./constants');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-module.exports = function (environment) {
+module.exports = function(environment) {
     environment = environment || 'production';
 
     var autoprefixerConfig = JSON.stringify({
