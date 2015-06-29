@@ -1,8 +1,3 @@
-# Todo
-
-1. eslint-config-airbnb
-2. split gulp tasks 
-
 # Gulp React Karma Less
 
 To start do a clone of this repo and type in your terminal:
