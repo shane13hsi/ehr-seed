@@ -2,8 +2,8 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var replace = require('gulp-replace');
 var webpack = require('webpack');
-var generateWebpackConfig = require('../../build/webpack-config-generator');
-var constants = require('../../build/constants');
+var generateWebpackConfig = require('../../webpack/webpack-config-generator');
+var constants = require('../../constants');
 var path = require('path');
 
 gulp.task('build', ['build:process-html', 'build:webpack']);

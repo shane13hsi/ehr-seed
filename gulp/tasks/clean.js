@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var constants = require('../../build/constants');
+var constants = require('../../constants');
 var del = require('del');
 
 gulp.task('clean', function(done) {

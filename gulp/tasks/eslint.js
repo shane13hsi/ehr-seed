@@ -3,10 +3,9 @@ var gulp = require('gulp');
 
 gulp.task('eslint', function() {
     return gulp.src([
-        'gulpfile.js',
         'gulp/**/*.js',
         'src/**/*.js',
-        'build/*.js'
+        'webpack/*.js'
     ])
         .pipe(eslint())
         .pipe(eslint.format())

@@ -1,6 +1,6 @@
 /*eslint-env node*/
 var path = require('path');
-var ABSOLUTE_BASE = path.normalize(path.join(__dirname, '..'));
+var ABSOLUTE_BASE = path.normalize(path.join(__dirname));
 
 module.exports = Object.freeze({
     ABSOLUTE_BASE: ABSOLUTE_BASE,

@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var constants = require('../../build/constants');
+var constants = require('../../constants');
 var karma = require('karma').server;
 
 gulp.task('tdd', function(done) {

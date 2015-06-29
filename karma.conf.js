@@ -1,5 +1,5 @@
 /*eslint-env node*/
-module.exports = function (config) {
+module.exports = function(config) {
     config.set({
         basePath: '',
         frameworks: ['mocha', 'chai'],
@@ -9,8 +9,8 @@ module.exports = function (config) {
         preprocessors: {
             'test/index.js': ['webpack']
         },
-        webpack: require('./build/webpack-config-generator')('test'),
-        webpackServer: require('./build/webpack-server-conf'),
+        webpack: require('./webpack/webpack-config-generator')('test'),
+        webpackServer: require('./webpack/webpack-server-conf'),
         exclude: [],
         port: 9999,
         logLevel: config.LOG_WARN,

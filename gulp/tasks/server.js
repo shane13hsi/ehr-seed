@@ -2,11 +2,11 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
-var generateWebpackConfig = require('../../build/webpack-config-generator');
+var generateWebpackConfig = require('../../webpack/webpack-config-generator');
 
 gulp.task('server', function() {
     var conf = generateWebpackConfig('server');
-    var serverConf = require('../../build/webpack-server-conf');
+    var serverConf = require('../../webpack/webpack-server-conf');
     var startCallback = function(err) {
         if (err) {
             throw new gutil.PluginError('server', err);
