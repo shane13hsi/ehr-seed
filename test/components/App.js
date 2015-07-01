@@ -1,4 +1,4 @@
-import App from 'scripts/components/App';
+import App from 'components/App';
 import React from 'react';
 import { expect } from 'chai';
 var TestUtils = React.addons.TestUtils;

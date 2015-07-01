@@ -6,10 +6,13 @@ module.exports = Object.freeze({
     ABSOLUTE_BASE: ABSOLUTE_BASE,
     NODE_MODULES_DIR: path.join(ABSOLUTE_BASE, 'node_modules'),
     KARMA_CONFIG_PATH: path.join(ABSOLUTE_BASE, 'karma.conf.js'),
-    DIST_DIR: 'dist',
-    SRC_DIR: 'src',
-    SCRIPT_DIR: 'scripts',
-    CSS_PATH: 'styles/main.css',
-    CSS_RELATIVE_BASE: '../',
-    ENTRY_NAME: 'main'
+
+    BUILD_DIR: path.join(ABSOLUTE_BASE, 'build'),
+    DIST_DIR: path.join(ABSOLUTE_BASE, 'dist'),
+
+    SRC_DIR: path.join(ABSOLUTE_BASE, 'src'),
+    ASSETS_DIR: path.join(ABSOLUTE_BASE, 'assets'),
+
+    SERVER_PORT: 8000,
+    WEBPACK_DEV_SERVER_PORT: 8888
 });

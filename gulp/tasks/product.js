@@ -2,14 +2,13 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var replace = require('gulp-replace');
 var webpack = require('webpack');
-var generateWebpackConfig = require('../../webpack/webpack-config-generator');
 var constants = require('../../constants');
 var path = require('path');
 
-gulp.task('build', ['build:process-html', 'build:webpack']);
+gulp.task('product', ['product:webpack']);
 
-gulp.task('build:webpack', ['clean'], function(done) {
-    var conf = generateWebpackConfig('production');
+gulp.task('product:webpack', ['clean'], function(done) {
+    var conf = require('../../webpack/webpack-production.config');
     webpack(conf, function(err, stats) {
         if (err) {
             throw new gutil.PluginError('build', err);
@@ -25,13 +24,4 @@ gulp.task('build:webpack', ['clean'], function(done) {
         }
         done();
     });
-});
-
-gulp.task('build:process-html', ['clean'], function() {
-    return gulp.src([path.join(constants.SRC_DIR, 'index.html')])
-        .pipe(replace(
-            '<!-- inject:css -->',
-            '<link href="' + constants.CSS_PATH + '" rel="stylesheet" type="text/css">'
-        ))
-        .pipe(gulp.dest(constants.DIST_DIR));
 });

@@ -9,14 +9,14 @@ module.exports = function(config) {
         preprocessors: {
             'test/index.js': ['webpack']
         },
-        webpack: require('./webpack/webpack-config-generator')('test'),
-        webpackServer: require('./webpack/webpack-server-conf'),
+        webpack: require('./webpack/webpack-test.config'),
+        webpackServer: require('./webpack/devServer'),
         exclude: [],
         port: 9999,
         logLevel: config.LOG_WARN,
         colors: true,
         autoWatch: true,
-        browsers: ['Chrome'],
+        browsers: ['PhantomJS'],
         reporters: ['progress'],
         captureTimeout: 10000,
         singleRun: false
