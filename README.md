@@ -6,7 +6,7 @@ To start do a clone of this repo and type in your terminal:
     
     gulp dev
     
-open browser and type localhost:8000. This will start webpack development server with hot code reload for React components.
+Then open the browser and type: `localhost:8000`. This will start webpack development server with hot code reload for React components.
 
 To run tests continuously (TDD) type in:
 
