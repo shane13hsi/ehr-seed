@@ -1,9 +1,6 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
-var replace = require('gulp-replace');
 var webpack = require('webpack');
-var constants = require('../../constants');
-var path = require('path');
 
 gulp.task('product', ['product:webpack']);
 
