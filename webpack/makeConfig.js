@@ -7,7 +7,7 @@ var webpack = require('webpack');
  *        entry   无 default
  *        output  无 defalut
  *
- *        module  无 default
+ *        module  有 default，请补全特定 env 的 module（主要是 loaders）
  *        plugin  有 default，请补全特定 env 的 plugins
  * */
 module.exports = function(options) {
@@ -29,6 +29,14 @@ module.exports = function(options) {
         },
 
         module: (function() {
+            var loaders = [
+                {test: /\.less$/, loader: 'style!css!less'},
+                {test: /\.(scss|sass)$/, loader: 'style!css!sass'},
+                {test: /\.(gif|jpg|png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=10000'}
+            ];
+            if (options.module.loaders) {
+                options.module.loaders = loaders.concat(options.module.loaders);
+            }
             return options.module;
         })(),
 
