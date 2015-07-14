@@ -22,9 +22,8 @@ module.exports = function(options) {
 
         resolve: {
             extensions: ['', '.js', '.jsx', '.json'],
-            root: constants.SRC_DIR, // 包含代码（modules）的目录，使用绝对路径
             alias: {
-                'react$': require.resolve(path.join(constants.NODE_MODULES_DIR, 'react')) // 强制 import 'react' 为同版本
+                'react$': require.resolve(path.join(constants.NODE_MODULES_DIR, 'react'))
             }
         },
 
